@@ -1,0 +1,18 @@
+# BARR-C:2018 conformance gate for GitHub Actions
+name: barr-c-2018
+on: [push, pull_request]
+jobs:
+  conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install LLVM tools
+        run: sudo apt-get update && sudo apt-get install -y clang-format clang-tidy
+      - name: Format gate
+        run: |
+          FILES=$(git ls-files '*.c' '*.h')
+          [ -z "$FILES" ] || clang-format --style=file --dry-run --Werror $FILES
+      - name: Static analysis gate
+        run: |
+          FILES=$(git ls-files '*.c' '*.h')
+          [ -z "$FILES" ] || clang-tidy $FILES -- -x c -std=c99 -Wall
