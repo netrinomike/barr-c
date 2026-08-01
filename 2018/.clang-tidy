@@ -26,11 +26,12 @@
 # readability-isolate-declaration          -> 8.1 one declaration per line
 # misc-unused-parameters                   -> 6.2 parameter hygiene
 #
-# NOT expressible in clang-tidy on C (enforced by check.sh greps, compiler
-# flags, and review): 5.2.b short/long ban (check.sh), 1.7.c goto (check.sh
-# advisory), volatile discipline (1.8/6.4), ISR rules (6.5), float equality
-# (5.4.b.iv: -Wfloat-equal), signed/unsigned mixing (5.3.c: -Wsign-compare),
-# cast comments (1.6.a).
+# NOT expressible in clang-tidy on C (enforced by check.sh gates, compiler
+# flags, and review): keyword bans 5.2.b/1.7.a/1.7.b and the 8.5.b library
+# call ban (check.sh), 1.7.c goto (check.sh advisory), control characters
+# and module naming (check.sh, 3.5/3.6/4.1), volatile discipline (1.8/6.4),
+# ISR rules (6.5), float equality (5.4.b.iv: -Wfloat-equal), signed/unsigned
+# mixing (5.3.c: -Wsign-compare), cast comments (1.6.a).
 ---
 Checks: >
   -*,
