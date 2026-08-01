@@ -8,9 +8,9 @@ Rule snippets below are abridged locators. The full rule text and its reasoning 
 
 | Coverage | Rules | Meaning |
 |---|---|---|
-| Gated | 53 | At least one kit mechanism fails the build on violation |
+| Gated | 61 | At least one kit mechanism fails the build on violation |
 | Advisory | 2 | Reported by check.sh but never fails the build (preferred-practice rules) |
-| Automatable, not in kit | 12 | The 2018 analysis classed these as tool-checkable; the kit does not yet gate them |
+| Automatable, not in kit | 4 | The 2018 analysis classed these as tool-checkable; the kit does not yet gate them |
 | Code review only | 100 | Human judgment (comments, design intent, naming quality, hardware knowledge) |
 
 A rule counted as Gated is not necessarily *fully* enforced; partial-scope mechanisms carry a note in the table. The honest reading is: the gate catches the mechanical core of the rule, review still owns the judgment at its edges.
@@ -38,17 +38,9 @@ Stated plainly rather than hidden: the 2018 rule analysis classed each of these 
 | Rule | Snippet | What would close the gap |
 |---|---|---|
 | 1.1.b | Whenever a C++ compiler is used, appropriate compiler options shall be ... | project-specific compiler configuration when a C++ compiler is used |
-| 1.7.a | The auto keyword shall not be used. | one-line check.sh lexical scan for the auto keyword |
-| 1.7.b | The register keyword shall not be used. | one-line check.sh lexical scan for the register keyword |
-| 3.6.b | The only other non-printable character permitted in a source code file ... | control-character scan (form feed is the only permitted extra) |
-| 4.1.a | All module names shall consist entirely of lowercase letters, numbers, ... | filename lint script (lowercase module names) |
-| 4.1.b | All module names shall be unique in their first 8 characters and end ... | filename lint script (8-char uniqueness, .h/.c suffixes) |
-| 4.1.c | No module’s header file name shall share the name of a header file from ... | filename lint script (no standard-library header collisions) |
-| 4.1.d | Any module containing a main() function shall have the word “main” as ... | filename lint script (main module naming) |
 | 4.3.e | Each source file shall be free of unused include files. | include-what-you-use (unused includes) |
 | 5.1.b | All new structures, unions, and enumerations shall be named via a ... | clang-query for struct/union/enum tags lacking a typedef |
 | 5.3.a | Bit-fields shall not be defined within signed integer types. | static analysis for bit-fields in signed types (no clang-tidy check exists) |
-| 8.5.b | C Standard Library functions abort(), exit(), setjmp(), and longjmp() ... | one-line check.sh lexical scan for abort/exit/setjmp/longjmp |
 
 ## Hardening flags beyond the standard
 
@@ -78,8 +70,8 @@ These kit flags map to no 2018 rule; they are defense in depth, not coverage.
 | 1.5.a | Abbreviations and acronyms should generally be avoided unless their ... | code reviews | Code review |
 | 1.5.b | A table of project-specific abbreviations and acronyms shall be ... | code reviews | Code review |
 | 1.6.a | Each cast shall feature an associated comment describing how the code ... | code reviews | Code review |
-| 1.7.a | The auto keyword shall not be used. | automated scan | *Not yet gated.* Automatable via one-line check.sh lexical scan for the auto keyword |
-| 1.7.b | The register keyword shall not be used. | automated scan | *Not yet gated.* Automatable via one-line check.sh lexical scan for the register keyword |
+| 1.7.a | The auto keyword shall not be used. | automated scan | **check.sh**: auto keyword lexical gate. comment mentions need a // barr-c:allow escape |
+| 1.7.b | The register keyword shall not be used. | automated scan | **check.sh**: register keyword lexical gate |
 | 1.7.c | It is a preferred practice to avoid all use of the goto keyword. If ... | code reviews | **check.sh**: goto lexical scan *(advisory)*. prints ADVISORY; never fails the build (the rule is a preferred practice) |
 | 1.7.d | It is a preferred practice to avoid all use of the continue keyword. | code reviews | Code review |
 | 1.8.a **[bug-killing]** | The static keyword shall be used to declare all functions and variables ... | code reviews | Code review |
@@ -143,18 +135,18 @@ These kit flags map to no 2018 rule; they are defense in depth, not coverage.
 | 3.4.a | Each indentation level should align at a multiple of 4 characters from ... | code beautifier | **clang-format**: IndentWidth: 4; **.editorconfig**: indent_size = 4 *(editor-only)* |
 | 3.4.b | Within a switch statement, the case labels shall be aligned; the ... | code beautifier | **clang-format**: IndentCaseLabels: true |
 | 3.4.c | Whenever a line of code is too long to fit within the maximum line ... | code beautifier | **clang-format**: ContinuationIndentWidth default (wrapped lines indent) |
-| 3.5.a | The tab character (ASCII 0x09) shall never appear within any source ... | automated scan | **clang-format**: UseTab: Never; **.editorconfig**: indent_style = space *(editor-only)* |
-| 3.6.a | Whenever possible, all source code lines shall end only with the single ... | automated scan | **clang-format**: LineEnding: LF; **.editorconfig**: end_of_line = lf *(editor-only)* |
-| 3.6.b | The only other non-printable character permitted in a source code file ... | automated scan | *Not yet gated.* Automatable via control-character scan (form feed is the only permitted extra) |
+| 3.5.a | The tab character (ASCII 0x09) shall never appear within any source ... | automated scan | **clang-format**: UseTab: Never; **check.sh**: control-character gate (tab byte); **.editorconfig**: indent_style = space *(editor-only)* |
+| 3.6.a | Whenever possible, all source code lines shall end only with the single ... | automated scan | **clang-format**: LineEnding: LF; **check.sh**: control-character gate (CR byte); **.editorconfig**: end_of_line = lf *(editor-only)* |
+| 3.6.b | The only other non-printable character permitted in a source code file ... | automated scan | **check.sh**: control-character gate. flags every non-printable except LF and form feed, exactly the rule's permission |
 
 ### Modules
 
 | Rule | Snippet | 2018 class | Kit enforcement |
 |---|---|---|---|
-| 4.1.a **[bug-killing]** | All module names shall consist entirely of lowercase letters, numbers, ... | automated scan | *Not yet gated.* Automatable via filename lint script (lowercase module names) |
-| 4.1.b | All module names shall be unique in their first 8 characters and end ... | automated scan | *Not yet gated.* Automatable via filename lint script (8-char uniqueness, .h/.c suffixes) |
-| 4.1.c **[bug-killing]** | No module’s header file name shall share the name of a header file from ... | automated scan | *Not yet gated.* Automatable via filename lint script (no standard-library header collisions) |
-| 4.1.d | Any module containing a main() function shall have the word “main” as ... | automated scan | *Not yet gated.* Automatable via filename lint script (main module naming) |
+| 4.1.a **[bug-killing]** | All module names shall consist entirely of lowercase letters, numbers, ... | automated scan | **check.sh**: module-name gate (lowercase) |
+| 4.1.b | All module names shall be unique in their first 8 characters and end ... | automated scan | **check.sh**: module-name gate (8-char uniqueness). checked across the file set passed to a single run |
+| 4.1.c **[bug-killing]** | No module’s header file name shall share the name of a header file from ... | automated scan | **check.sh**: module-name gate (standard-header collision) |
+| 4.1.d | Any module containing a main() function shall have the word “main” as ... | automated scan | **check.sh**: module-name gate (main() module naming) |
 | 4.2.a | There shall always be precisely one header file for each source file ... | code reviews | Code review |
 | 4.2.b | Each header file shall contain a preprocessor guard against multiple ... | code reviews | Code review |
 | 4.2.c | The header file shall identify only the procedures, constants, and data ... | code reviews | Code review |
@@ -266,7 +258,7 @@ These kit flags map to no 2018 rule; they are defense in depth, not coverage.
 | 8.4.c | Infinite loops shall be implemented via controlling expression for (;;). | code reviews | Code review |
 | 8.4.d | Each loop with an empty body shall feature a set of braces enclosing a ... | code reviews | Code review |
 | 8.5.a | The use of goto statements shall be restricted as per Rule 1.7.c. | code reviews | **check.sh**: goto lexical scan (via Rule 1.7.c) *(advisory)* |
-| 8.5.b | C Standard Library functions abort(), exit(), setjmp(), and longjmp() ... | automated scan | *Not yet gated.* Automatable via one-line check.sh lexical scan for abort/exit/setjmp/longjmp |
+| 8.5.b | C Standard Library functions abort(), exit(), setjmp(), and longjmp() ... | automated scan | **check.sh**: abort/exit/setjmp/longjmp call gate. call-site pattern; identifiers like atexit or my_exit do not match |
 | 8.6.a **[bug-killing]** | When evaluating the equality of a variable against a constant, the ... | code reviews | **compiler**: -Werror=parentheses. guards the defect class (assignment in a condition); the operand ordering itself needs review |
 
 ## Methodology

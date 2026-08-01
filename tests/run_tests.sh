@@ -122,25 +122,30 @@ check_gate() {
 grep -v '^#' "$HERE/manifest.tsv" | while IFS='	' read -r fx expect match extras; do
     [ -n "$fx" ] || continue
     sandbox
-    cp "$FIX/$fx" "$T/"
+    # a fixture entry may be a comma-separated file set (multi-file gates
+    # like the 4.1.b module-name uniqueness check)
+    FXFILES=$(printf '%s' "$fx" | tr ',' ' ')
+    for ff in $FXFILES; do
+        cp "$FIX/$ff" "$T/"
+    done
 
     case "$expect" in
         script-fail)
-            out=$(gate_script "$fx"); rc=$?
+            out=$(gate_script $FXFILES); rc=$?
             if [ "$rc" -ne 0 ] && printf '%s' "$out" | grep -F "$match" >/dev/null; then
                 echo "ok $fx (script gate failed as required)"
             else
                 echo "MFAIL $fx: script gate rc=$rc missing '$match'"
             fi ;;
         script-advisory)
-            out=$(gate_script "$fx"); rc=$?
+            out=$(gate_script $FXFILES); rc=$?
             if [ "$rc" -eq 0 ] && printf '%s' "$out" | grep -F "$match" >/dev/null; then
                 echo "ok $fx (advisory printed, build not failed)"
             else
                 echo "MFAIL $fx: rc=$rc or missing '$match'"
             fi ;;
         script-clean)
-            out=$(gate_script "$fx"); rc=$?
+            out=$(gate_script $FXFILES); rc=$?
             if [ "$rc" -eq 0 ] && ! printf '%s' "$out" | grep -E 'FAIL|ADVISORY' >/dev/null; then
                 echo "ok $fx (barr-c:allow escape honored)"
             else
@@ -158,9 +163,9 @@ grep -v '^#' "$HERE/manifest.tsv" | while IFS='	' read -r fx expect match extras
                     continue
                 fi
                 case "$gate" in
-                    fmt)  out=$(gate_fmt "$fx");  rc=$? ;;
-                    tidy) out=$(gate_tidy "$fx"); rc=$? ;;
-                    cc)   out=$(gate_cc "$fx");   rc=$? ;;
+                    fmt)  out=$(gate_fmt $FXFILES);  rc=$? ;;
+                    tidy) out=$(gate_tidy $FXFILES); rc=$? ;;
+                    cc)   out=$(gate_cc $FXFILES);   rc=$? ;;
                 esac
                 if [ "$gate" = "$expect" ]; then
                     if [ "$rc" -ne 0 ] && { [ "$match" = "-" ] || printf '%s' "$out" | grep -F "$match" >/dev/null; }; then

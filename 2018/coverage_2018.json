@@ -2,10 +2,10 @@
  "standard": "BARR-C:2018",
  "rule_count": 167,
  "coverage_counts": {
-  "gated": 53,
+  "gated": 61,
   "advisory": 2,
   "editor-only": 0,
-  "gap": 12,
+  "gap": 4,
   "review": 100
  },
  "contradiction_verdict": "No contradictory pair exists: no kit mechanism demands what another forbids. All multi-mechanism overlaps are unions (the stricter tool subsumes the looser). Empirical backstop: tests/run_tests.sh format round-trip and cross-gate matrix.",
@@ -202,9 +202,16 @@
    "bug_killing": false,
    "class_2018": "automated scan",
    "decidable_2018": "",
-   "coverage": "gap",
-   "mechanisms": [],
-   "suggested_mechanism": "one-line check.sh lexical scan for the auto keyword"
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "check.sh",
+     "detail": "auto keyword lexical gate",
+     "mode": "gate",
+     "note": "comment mentions need a // barr-c:allow escape"
+    }
+   ],
+   "suggested_mechanism": ""
   },
   {
    "id": "1.7.b",
@@ -214,9 +221,16 @@
    "bug_killing": false,
    "class_2018": "automated scan",
    "decidable_2018": "",
-   "coverage": "gap",
-   "mechanisms": [],
-   "suggested_mechanism": "one-line check.sh lexical scan for the register keyword"
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "check.sh",
+     "detail": "register keyword lexical gate",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
   },
   {
    "id": "1.7.c",
@@ -1050,6 +1064,12 @@
      "note": ""
     },
     {
+     "tool": "check.sh",
+     "detail": "control-character gate (tab byte)",
+     "mode": "gate",
+     "note": ""
+    },
+    {
      "tool": ".editorconfig",
      "detail": "indent_style = space",
      "mode": "editor",
@@ -1075,6 +1095,12 @@
      "note": ""
     },
     {
+     "tool": "check.sh",
+     "detail": "control-character gate (CR byte)",
+     "mode": "gate",
+     "note": ""
+    },
+    {
      "tool": ".editorconfig",
      "detail": "end_of_line = lf",
      "mode": "editor",
@@ -1091,9 +1117,16 @@
    "bug_killing": false,
    "class_2018": "automated scan",
    "decidable_2018": "NEW - Likely",
-   "coverage": "gap",
-   "mechanisms": [],
-   "suggested_mechanism": "control-character scan (form feed is the only permitted extra)"
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "check.sh",
+     "detail": "control-character gate",
+     "mode": "gate",
+     "note": "flags every non-printable except LF and form feed, exactly the rule's permission"
+    }
+   ],
+   "suggested_mechanism": ""
   },
   {
    "id": "4.1.a",
@@ -1103,9 +1136,16 @@
    "bug_killing": true,
    "class_2018": "automated scan",
    "decidable_2018": "",
-   "coverage": "gap",
-   "mechanisms": [],
-   "suggested_mechanism": "filename lint script (lowercase module names)"
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "check.sh",
+     "detail": "module-name gate (lowercase)",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
   },
   {
    "id": "4.1.b",
@@ -1115,9 +1155,16 @@
    "bug_killing": false,
    "class_2018": "automated scan",
    "decidable_2018": "",
-   "coverage": "gap",
-   "mechanisms": [],
-   "suggested_mechanism": "filename lint script (8-char uniqueness, .h/.c suffixes)"
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "check.sh",
+     "detail": "module-name gate (8-char uniqueness)",
+     "mode": "gate",
+     "note": "checked across the file set passed to a single run"
+    }
+   ],
+   "suggested_mechanism": ""
   },
   {
    "id": "4.1.c",
@@ -1127,9 +1174,16 @@
    "bug_killing": true,
    "class_2018": "automated scan",
    "decidable_2018": "",
-   "coverage": "gap",
-   "mechanisms": [],
-   "suggested_mechanism": "filename lint script (no standard-library header collisions)"
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "check.sh",
+     "detail": "module-name gate (standard-header collision)",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
   },
   {
    "id": "4.1.d",
@@ -1139,9 +1193,16 @@
    "bug_killing": false,
    "class_2018": "automated scan",
    "decidable_2018": "",
-   "coverage": "gap",
-   "mechanisms": [],
-   "suggested_mechanism": "filename lint script (main module naming)"
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "check.sh",
+     "detail": "module-name gate (main() module naming)",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
   },
   {
    "id": "4.2.a",
@@ -2442,9 +2503,16 @@
    "bug_killing": false,
    "class_2018": "automated scan",
    "decidable_2018": "NEW - Likely",
-   "coverage": "gap",
-   "mechanisms": [],
-   "suggested_mechanism": "one-line check.sh lexical scan for abort/exit/setjmp/longjmp"
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "check.sh",
+     "detail": "abort/exit/setjmp/longjmp call gate",
+     "mode": "gate",
+     "note": "call-site pattern; identifiers like atexit or my_exit do not match"
+    }
+   ],
+   "suggested_mechanism": ""
   },
   {
    "id": "8.6.a",

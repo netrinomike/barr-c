@@ -14,6 +14,52 @@ fi
 IFS='
 '
 
+echo "== character and module gates (BARR-C:2018) =="
+# Non-printing characters (Rules 3.5.a, 3.6.a, 3.6.b): LF ends lines and
+# form feed is the only other permitted non-printable; tabs and CR are
+# violations. The class is built at run time so this script itself never
+# contains a control byte.
+CTRL=$(printf '\001\002\003\004\005\006\007\010\011\013\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037\177')
+if grep -n "[$CTRL]" /dev/null $FILES; then
+    echo "FAIL: control characters found (BARR-C 3.5.a tabs / 3.6.a CR line endings / 3.6.b non-printables)"
+    exit 1
+fi
+
+# Module naming (Rules 4.1.a-4.1.d): lowercase names, unique in their
+# first 8 characters, no standard-library header collisions, and main()
+# lives in a module named main-something.
+STDHDRS="assert.h complex.h ctype.h errno.h fenv.h float.h inttypes.h iso646.h limits.h locale.h math.h setjmp.h signal.h stdalign.h stdarg.h stdatomic.h stdbool.h stdckdint.h stddef.h stdint.h stdio.h stdlib.h stdnoreturn.h string.h tgmath.h threads.h time.h uchar.h wchar.h wctype.h"
+NAMEBAD=0
+for f in $FILES; do
+    b=$(basename "$f")
+    case "$b" in
+        *[!a-z0-9_.]*)
+            echo "FAIL: $b is not all lowercase (BARR-C 4.1.a)"
+            NAMEBAD=1 ;;
+    esac
+    # substring match rather than a split loop: IFS is newline-only here
+    case " $STDHDRS " in
+        *" $b "*)
+            echo "FAIL: $b collides with a standard library header (BARR-C 4.1.c)"
+            NAMEBAD=1 ;;
+    esac
+    if grep -E '(^|[^A-Za-z0-9_])main[[:space:]]*\(' "$f" >/dev/null 2>&1; then
+        case "$b" in
+            *main*) : ;;
+            *)
+                echo "FAIL: $f defines main() but its name lacks the word main (BARR-C 4.1.d)"
+                NAMEBAD=1 ;;
+        esac
+    fi
+done
+DUPSTEMS=$(for f in $FILES; do basename "$f" | sed 's/\.[ch]$//'; done \
+           | sort -u | cut -c1-8 | sort | uniq -d)
+if [ -n "$DUPSTEMS" ]; then
+    echo "FAIL: module names not unique in their first 8 characters ($DUPSTEMS) (BARR-C 4.1.b)"
+    NAMEBAD=1
+fi
+[ "$NAMEBAD" -eq 0 ] || exit 1
+
 echo "== clang-format check (BARR-C:2018) =="
 clang-format --style=file --dry-run --Werror $FILES
 
@@ -27,6 +73,22 @@ if grep -nE '(^|[^A-Za-z0-9_])(short|long)([^A-Za-z0-9_]|$)' /dev/null $FILES \
     | grep -vE '^[^:]*:[0-9]+:[[:space:]]*//'
 then
     echo "FAIL: short/long keywords found (BARR-C 5.2.b); mark reviewed exceptions with // barr-c:allow"
+    exit 1
+fi
+# Rules 1.7.a / 1.7.b: the auto and register keywords shall not be used.
+if grep -nE '(^|[^A-Za-z0-9_])(auto|register)([^A-Za-z0-9_]|$)' /dev/null $FILES \
+    | grep -v '//.*barr-c:allow' \
+    | grep -vE '^[^:]*:[0-9]+:[[:space:]]*//'
+then
+    echo "FAIL: auto/register keywords found (BARR-C 1.7.a/1.7.b); mark reviewed exceptions with // barr-c:allow"
+    exit 1
+fi
+# Rule 8.5.b: abort(), exit(), setjmp(), and longjmp() shall not be used.
+if grep -nE '(^|[^A-Za-z0-9_])(abort|exit|setjmp|longjmp)[[:space:]]*\(' /dev/null $FILES \
+    | grep -v '//.*barr-c:allow' \
+    | grep -vE '^[^:]*:[0-9]+:[[:space:]]*//'
+then
+    echo "FAIL: abort/exit/setjmp/longjmp calls found (BARR-C 8.5.b); mark reviewed exceptions with // barr-c:allow"
     exit 1
 fi
 # Rule 1.7.c: goto is a preferred-practice avoidance; advisory only.

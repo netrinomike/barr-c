@@ -24,6 +24,14 @@ tidy_unused_param.c	tidy	misc-unused-parameters	cc
 lex_short.c	script-fail	5.2.b	-
 lex_goto.c	script-advisory	ADVISORY	-
 lex_allow.c	script-clean	-	-
+lex_auto.c	script-fail	1.7.a	-
+lex_register.c	script-fail	1.7.a	-
+lex_exit.c	script-fail	8.5.b	-
+lex_ctrl.c	script-fail	control characters	-
+lex_entry.c	script-fail	4.1.d	-
+string.h	script-fail	4.1.c	-
+lex_BadCase.c	script-fail	4.1.a	-
+lex_dupname_alpha.c,lex_dupname_beta.c	script-fail	4.1.b	-
 fmt_brace_knr.c	fmt	clang-format-violations	-
 fmt_long_line.c	fmt	clang-format-violations	-
 fmt_tab_indent.c	fmt	clang-format-violations	-
