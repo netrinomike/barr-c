@@ -19,9 +19,10 @@ Non-negotiable practices when generating C for this project:
 - Snake_case naming; module-prefixed public symbols; no identifiers
   colliding with C/C++ keywords or the C Standard Library (BARRC-4/6/7).
 
-The standard defines 185 rules, of which 40 are marked
-bug-killing. The complete machine-readable manifest is rules.json in this
-directory; when in doubt, consult it, and prefer the stricter reading.
+The 2018 edition defines 167 rules, of which 45 are marked
+bug-killing. COVERAGE_2018.md in this kit maps every rule to its
+enforcement mechanism; when in doubt, consult it, and prefer the
+stricter reading.
 
 Provenance (Chapter 9): record tool name and version in the commit message
 for any generated code; a named human author must read and own every line.

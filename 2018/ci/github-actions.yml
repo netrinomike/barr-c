@@ -1,18 +1,17 @@
 # BARR-C:2018 conformance gate for GitHub Actions
+# Runs check.sh so CI and the local check are one code path.
 name: barr-c-2018
 on: [push, pull_request]
 jobs:
   conformance:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Install LLVM tools
-        run: sudo apt-get update && sudo apt-get install -y clang-format clang-tidy
-      - name: Format gate
+      - name: Install LLVM tools (pinned; clang-tidy 17+ required)
         run: |
-          FILES=$(git ls-files '*.c' '*.h')
-          [ -z "$FILES" ] || clang-format --style=file --dry-run --Werror $FILES
-      - name: Static analysis gate
-        run: |
-          FILES=$(git ls-files '*.c' '*.h')
-          [ -z "$FILES" ] || clang-tidy $FILES -- -x c -std=c99 -Wall
+          sudo apt-get update
+          sudo apt-get install -y clang-format-18 clang-tidy-18
+          sudo ln -sf /usr/bin/clang-format-18 /usr/local/bin/clang-format
+          sudo ln -sf /usr/bin/clang-tidy-18 /usr/local/bin/clang-tidy
+      - name: BARR-C gates
+        run: sh ./check.sh

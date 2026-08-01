@@ -1,0 +1,40 @@
+# BARR-C kit validation manifest. Columns are tab-separated:
+# fixture<TAB>expect<TAB>match<TAB>allowed_extra
+#   expect: the gate that MUST fail (fmt|tidy|cc) or a script-gate mode
+#           (script-fail|script-advisory|script-clean)
+#   match:  substring required in the failing gate's output ("-" for none)
+#   allowed_extra: comma list of other gates permitted to fail ("-" for none);
+#           this column is the empirical record of multi-tool overlaps.
+tidy_braces.c	tidy	readability-braces-around-statements	-
+tidy_assign_in_if.c	tidy	bugprone-assignment-in-if-condition	-
+tidy_signed_bitwise.c	tidy	hicpp-signed-bitwise	-
+tidy_reserved_ident.c	tidy	bugprone-reserved-identifier	-
+tidy_naming_function.c	tidy	readability-identifier-naming	-
+tidy_naming_global.c	tidy	readability-identifier-naming	-
+tidy_naming_typedef.c	tidy	readability-identifier-naming	-
+tidy_naming_macro.c	tidy	readability-identifier-naming	-
+tidy_function_size.c	tidy	readability-function-size	-
+tidy_init_variables.c	tidy	cppcoreguidelines-init-variables	-
+tidy_macro_parens.c	tidy	bugprone-macro-parentheses	-
+tidy_macro_side_effects.c	tidy	bugprone-macro-repeated-side-effects	-
+tidy_magic_number.c	tidy	readability-magic-numbers	-
+tidy_switch_no_default.c	tidy	bugprone-switch-missing-default-case	cc
+tidy_multi_decl.c	tidy	readability-isolate-declaration	-
+tidy_unused_param.c	tidy	misc-unused-parameters	cc
+lex_short.c	script-fail	5.2.b	-
+lex_goto.c	script-advisory	ADVISORY	-
+lex_allow.c	script-clean	-	-
+fmt_brace_knr.c	fmt	clang-format-violations	-
+fmt_long_line.c	fmt	clang-format-violations	-
+fmt_tab_indent.c	fmt	clang-format-violations	-
+fmt_ptr_align.c	fmt	clang-format-violations	-
+fmt_ctrl_space.c	fmt	clang-format-violations	-
+cc_float_equal.c	cc	float-equal	-
+cc_sign_compare.c	cc	sign-compare	tidy
+cc_fallthrough.c	cc	fallthrough	-
+cc_vla.c	cc	vla	-
+cc_shadow.c	cc	shadow	-
+cc_undef.c	cc	undef	-
+cc_parentheses.c	cc	parentheses	tidy
+cc_implicit_decl.c	cc	implicit	tidy
+cc_std_pin.c	cc	bool	tidy
