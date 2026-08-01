@@ -1,0 +1,2483 @@
+{
+ "standard": "BARR-C:2018",
+ "rule_count": 167,
+ "coverage_counts": {
+  "gated": 53,
+  "advisory": 2,
+  "editor-only": 0,
+  "gap": 12,
+  "review": 100
+ },
+ "contradiction_verdict": "No contradictory pair exists: no kit mechanism demands what another forbids. All multi-mechanism overlaps are unions (the stricter tool subsumes the looser). Empirical backstop: tests/run_tests.sh format round-trip and cross-gate matrix.",
+ "rules": [
+  {
+   "id": "1.1.a",
+   "chapter": "General Rules",
+   "section": "Which C?",
+   "snippet": "All programs shall be written to comply with the C99 version of the ISO ...",
+   "bug_killing": false,
+   "class_2018": "compiler setup",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "compiler",
+     "detail": "-std=c99 dialect pin",
+     "mode": "gate",
+     "note": "the build cannot float to a newer default dialect"
+    },
+    {
+     "tool": "compiler",
+     "detail": "-Werror=implicit-function-declaration",
+     "mode": "gate",
+     "note": "C99 forbids implicit declarations"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.1.b",
+   "chapter": "General Rules",
+   "section": "Which C?",
+   "snippet": "Whenever a C++ compiler is used, appropriate compiler options shall be ...",
+   "bug_killing": false,
+   "class_2018": "compiler setup",
+   "decidable_2018": "",
+   "coverage": "gap",
+   "mechanisms": [],
+   "suggested_mechanism": "project-specific compiler configuration when a C++ compiler is used"
+  },
+  {
+   "id": "1.1.c",
+   "chapter": "General Rules",
+   "section": "Which C?",
+   "snippet": "The use of proprietary compiler language keyword extensions, #pragma, ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.1.d",
+   "chapter": "General Rules",
+   "section": "Which C?",
+   "snippet": "Preprocessor directive #define shall not be used to alter or rename any ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "NEW - No",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.2.a",
+   "chapter": "General Rules",
+   "section": "Line Widths",
+   "snippet": "The width of all lines in a program shall be limited to a maximum of 80 ...",
+   "bug_killing": false,
+   "class_2018": "automated scan",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "ColumnLimit: 80",
+     "mode": "gate",
+     "note": ""
+    },
+    {
+     "tool": ".editorconfig",
+     "detail": "max_line_length = 80",
+     "mode": "editor",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.3.a",
+   "chapter": "General Rules",
+   "section": "Braces",
+   "snippet": "Braces shall always surround the blocks of code (a.k.a., compound ...",
+   "bug_killing": true,
+   "class_2018": "automated scan",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "readability-braces-around-statements",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.3.b",
+   "chapter": "General Rules",
+   "section": "Braces",
+   "snippet": "Each left brace ({) shall appear by itself on the line below the start ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "BreakBeforeBraces: Allman",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.4.a",
+   "chapter": "General Rules",
+   "section": "Parentheses",
+   "snippet": "Do not rely on C\u2019s operator precedence rules, as they may not be ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.4.b",
+   "chapter": "General Rules",
+   "section": "Parentheses",
+   "snippet": "Unless it is a single identifier or constant, each operand of the ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.5.a",
+   "chapter": "General Rules",
+   "section": "Common Abbreviations",
+   "snippet": "Abbreviations and acronyms should generally be avoided unless their ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (human language)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.5.b",
+   "chapter": "General Rules",
+   "section": "Common Abbreviations",
+   "snippet": "A table of project-specific abbreviations and acronyms shall be ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.6.a",
+   "chapter": "General Rules",
+   "section": "Casts",
+   "snippet": "Each cast shall feature an associated comment describing how the code ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.7.a",
+   "chapter": "General Rules",
+   "section": "Keywords to Avoid",
+   "snippet": "The auto keyword shall not be used.",
+   "bug_killing": false,
+   "class_2018": "automated scan",
+   "decidable_2018": "",
+   "coverage": "gap",
+   "mechanisms": [],
+   "suggested_mechanism": "one-line check.sh lexical scan for the auto keyword"
+  },
+  {
+   "id": "1.7.b",
+   "chapter": "General Rules",
+   "section": "Keywords to Avoid",
+   "snippet": "The register keyword shall not be used.",
+   "bug_killing": false,
+   "class_2018": "automated scan",
+   "decidable_2018": "",
+   "coverage": "gap",
+   "mechanisms": [],
+   "suggested_mechanism": "one-line check.sh lexical scan for the register keyword"
+  },
+  {
+   "id": "1.7.c",
+   "chapter": "General Rules",
+   "section": "Keywords to Avoid",
+   "snippet": "It is a preferred practice to avoid all use of the goto keyword. If ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "advisory",
+   "mechanisms": [
+    {
+     "tool": "check.sh",
+     "detail": "goto lexical scan",
+     "mode": "advisory",
+     "note": "prints ADVISORY; never fails the build (the rule is a preferred practice)"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.7.d",
+   "chapter": "General Rules",
+   "section": "Keywords to Avoid",
+   "snippet": "It is a preferred practice to avoid all use of the continue keyword.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.8.a",
+   "chapter": "General Rules",
+   "section": "Keywords to Frequent",
+   "snippet": "The static keyword shall be used to declare all functions and variables ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.8.b",
+   "chapter": "General Rules",
+   "section": "Keywords to Frequent",
+   "snippet": "The const keyword shall be used whenever appropriate. Examples include:",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.8.b.i",
+   "chapter": "General Rules",
+   "section": "Keywords to Frequent",
+   "snippet": "To declare variables that should not be changed after initialization,",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.8.b.ii",
+   "chapter": "General Rules",
+   "section": "Keywords to Frequent",
+   "snippet": "To define call-by-reference function parameters that should not be ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.8.b.iii",
+   "chapter": "General Rules",
+   "section": "Keywords to Frequent",
+   "snippet": "To define fields in a struct or union that should not be modified ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.8.b.iv",
+   "chapter": "General Rules",
+   "section": "Keywords to Frequent",
+   "snippet": "As a strongly typed alternative to #define for numerical constants.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.8.c",
+   "chapter": "General Rules",
+   "section": "Keywords to Frequent",
+   "snippet": "The volatile keyword shall be used whenever appropriate. Examples ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (subjective)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.8.c.i",
+   "chapter": "General Rules",
+   "section": "Keywords to Frequent",
+   "snippet": "To declare a global variable accessible (by current use or scope) by ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.8.c.ii",
+   "chapter": "General Rules",
+   "section": "Keywords to Frequent",
+   "snippet": "To declare a global variable accessible (by current use or scope) by ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.8.c.iii",
+   "chapter": "General Rules",
+   "section": "Keywords to Frequent",
+   "snippet": "To declare a pointer to a memory-mapped I/O peripheral register set ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "1.8.c.iv",
+   "chapter": "General Rules",
+   "section": "Keywords to Frequent",
+   "snippet": "To declare a delay loop counter.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.1.a",
+   "chapter": "Comments",
+   "section": "Acceptable Formats",
+   "snippet": "Single-line comments in the C++ style (i.e., preceded by //) are a ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.1.b",
+   "chapter": "Comments",
+   "section": "Acceptable Formats",
+   "snippet": "Comments shall never contain the preprocessor tokens /*, //, or \\.",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.1.c",
+   "chapter": "Comments",
+   "section": "Acceptable Formats",
+   "snippet": "Code shall never be commented out, even temporarily.",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.1.c.i",
+   "chapter": "Comments",
+   "section": "Acceptable Formats",
+   "snippet": "To temporarily disable a block of code, use the preprocessor\u2019s ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.1.c.ii",
+   "chapter": "Comments",
+   "section": "Acceptable Formats",
+   "snippet": "Any line or block of code that exists specifically to increase the ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.2.a",
+   "chapter": "Comments",
+   "section": "Location and Content",
+   "snippet": "All comments shall be written in clear and complete sentences, with ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (comments)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.2.b",
+   "chapter": "Comments",
+   "section": "Location and Content",
+   "snippet": "The most useful comments generally precede a block of code that ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (comments)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.2.c",
+   "chapter": "Comments",
+   "section": "Location and Content",
+   "snippet": "Avoid explaining the obvious. Assume the reader knows the C programming ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (comments)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.2.d",
+   "chapter": "Comments",
+   "section": "Location and Content",
+   "snippet": "The number and length of individual comment blocks shall be ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (comments)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.2.e",
+   "chapter": "Comments",
+   "section": "Location and Content",
+   "snippet": "Whenever an algorithm or technical detail is defined in an external ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (comments)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.2.f",
+   "chapter": "Comments",
+   "section": "Location and Content",
+   "snippet": "Whenever a flow chart or other diagram is needed to sufficiently ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (comments)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.2.g",
+   "chapter": "Comments",
+   "section": "Location and Content",
+   "snippet": "All assumptions shall be spelled out in comments.",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (comments)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.2.h",
+   "chapter": "Comments",
+   "section": "Location and Content",
+   "snippet": "Each module and function shall be commented in a manner suitable for ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (comments)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.2.i",
+   "chapter": "Comments",
+   "section": "Location and Content",
+   "snippet": "Use the following capitalized comment markers to highlight important ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (comments)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.2.i.i",
+   "chapter": "Comments",
+   "section": "Location and Content",
+   "snippet": "\u201cWARNING:\u201d alerts a maintainer there is risk in changing this code. For ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (comments)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.2.i.ii",
+   "chapter": "Comments",
+   "section": "Location and Content",
+   "snippet": "\u201cNOTE:\u201d provides descriptive comments about the \u201cwhy\u201d of a chunk of ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (comments)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "2.2.i.iii",
+   "chapter": "Comments",
+   "section": "Location and Content",
+   "snippet": "\u201cTODO:\u201d indicates an area of the code is still under construction and ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (comments)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.1.a",
+   "chapter": "White Space",
+   "section": "Spaces",
+   "snippet": "Each of the keywords if, while, for, switch, and return shall be ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "SpaceBeforeParensOptions.AfterControlStatements",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.1.b",
+   "chapter": "White Space",
+   "section": "Spaces",
+   "snippet": "Each of the assignment operators =, +=, -=, *=, /=, %=, &=, |=, ^=, ~=, ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "LLVM default assignment-operator spacing",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.1.c",
+   "chapter": "White Space",
+   "section": "Spaces",
+   "snippet": "Each of the binary operators +, -, *, /, %, <, <=, >, >=, ==,!=, <<, ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "LLVM default binary-operator spacing",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.1.d",
+   "chapter": "White Space",
+   "section": "Spaces",
+   "snippet": "Each of the unary operators +, -, ++, --, ! , and ~, shall be written ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "LLVM default unary-operator spacing",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.1.e",
+   "chapter": "White Space",
+   "section": "Spaces",
+   "snippet": "The pointer operators * and & shall be written with white space on each ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "PointerAlignment: Middle",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.1.f",
+   "chapter": "White Space",
+   "section": "Spaces",
+   "snippet": "The ? and : characters that comprise the ternary operator shall each ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "LLVM default ternary-operator spacing",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.1.g",
+   "chapter": "White Space",
+   "section": "Spaces",
+   "snippet": "The structure pointer and structure member operators (-> and ., ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "LLVM default member-operator spacing",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.1.h",
+   "chapter": "White Space",
+   "section": "Spaces",
+   "snippet": "The left and right brackets of the array subscript operator ([ and ]) ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "LLVM default subscript-bracket spacing",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.1.i",
+   "chapter": "White Space",
+   "section": "Spaces",
+   "snippet": "Expressions within parentheses shall always have no spaces adjacent to ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "SpacesInParens: Never",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.1.j",
+   "chapter": "White Space",
+   "section": "Spaces",
+   "snippet": "The left and right parentheses of the function call operator shall ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "call parens unspaced (LLVM default); definition/declaration name spacing via SpaceBeforeParensOptions",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.1.k",
+   "chapter": "White Space",
+   "section": "Spaces",
+   "snippet": "Except when at the end of a line, each comma separating function ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "LLVM default comma spacing",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.1.l",
+   "chapter": "White Space",
+   "section": "Spaces",
+   "snippet": "Each semicolon separating the elements of a *for* statement shall ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "LLVM default for-semicolon spacing",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.1.m",
+   "chapter": "White Space",
+   "section": "Spaces",
+   "snippet": "Each semicolon shall follow the statement it terminates without a ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "LLVM default semicolon placement",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.2.a",
+   "chapter": "White Space",
+   "section": "Alignment",
+   "snippet": "The names of variables within a series of declarations shall have their ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "AlignConsecutiveDeclarations",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.2.b",
+   "chapter": "White Space",
+   "section": "Alignment",
+   "snippet": "The names of struct and union members shall have their first characters ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "AlignConsecutiveDeclarations",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.2.c",
+   "chapter": "White Space",
+   "section": "Alignment",
+   "snippet": "The assignment operators within a block of adjacent assignment ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "AlignConsecutiveAssignments",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.2.d",
+   "chapter": "White Space",
+   "section": "Alignment",
+   "snippet": "The # in a preprocessor directive shall always be located at the start ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "IndentPPDirectives default (# stays at line start)",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.3.a",
+   "chapter": "White Space",
+   "section": "Blank Lines",
+   "snippet": "No line of code shall contain more than one statement.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "one statement per line reflow",
+     "mode": "gate",
+     "note": ""
+    },
+    {
+     "tool": "clang-tidy",
+     "detail": "readability-isolate-declaration",
+     "mode": "gate",
+     "note": "covers comma-joined declarations specifically"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.3.b",
+   "chapter": "White Space",
+   "section": "Blank Lines",
+   "snippet": "There shall be a blank line before and after each natural block of ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.3.c",
+   "chapter": "White Space",
+   "section": "Blank Lines",
+   "snippet": "Each source file shall terminate with a comment marking the end of file ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "InsertNewlineAtEOF",
+     "mode": "gate",
+     "note": "final newline only; the end-of-file comment needs review"
+    },
+    {
+     "tool": ".editorconfig",
+     "detail": "insert_final_newline = true",
+     "mode": "editor",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.4.a",
+   "chapter": "White Space",
+   "section": "Indentation",
+   "snippet": "Each indentation level should align at a multiple of 4 characters from ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "IndentWidth: 4",
+     "mode": "gate",
+     "note": ""
+    },
+    {
+     "tool": ".editorconfig",
+     "detail": "indent_size = 4",
+     "mode": "editor",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.4.b",
+   "chapter": "White Space",
+   "section": "Indentation",
+   "snippet": "Within a switch statement, the case labels shall be aligned; the ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "IndentCaseLabels: true",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.4.c",
+   "chapter": "White Space",
+   "section": "Indentation",
+   "snippet": "Whenever a line of code is too long to fit within the maximum line ...",
+   "bug_killing": false,
+   "class_2018": "code beautifier",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "ContinuationIndentWidth default (wrapped lines indent)",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.5.a",
+   "chapter": "White Space",
+   "section": "Tabs",
+   "snippet": "The tab character (ASCII 0x09) shall never appear within any source ...",
+   "bug_killing": false,
+   "class_2018": "automated scan",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "UseTab: Never",
+     "mode": "gate",
+     "note": ""
+    },
+    {
+     "tool": ".editorconfig",
+     "detail": "indent_style = space",
+     "mode": "editor",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.6.a",
+   "chapter": "White Space",
+   "section": "Non-Printing Characters",
+   "snippet": "Whenever possible, all source code lines shall end only with the single ...",
+   "bug_killing": false,
+   "class_2018": "automated scan",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-format",
+     "detail": "LineEnding: LF",
+     "mode": "gate",
+     "note": ""
+    },
+    {
+     "tool": ".editorconfig",
+     "detail": "end_of_line = lf",
+     "mode": "editor",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "3.6.b",
+   "chapter": "White Space",
+   "section": "Non-Printing Characters",
+   "snippet": "The only other non-printable character permitted in a source code file ...",
+   "bug_killing": false,
+   "class_2018": "automated scan",
+   "decidable_2018": "NEW - Likely",
+   "coverage": "gap",
+   "mechanisms": [],
+   "suggested_mechanism": "control-character scan (form feed is the only permitted extra)"
+  },
+  {
+   "id": "4.1.a",
+   "chapter": "Modules",
+   "section": "Naming Conventions",
+   "snippet": "All module names shall consist entirely of lowercase letters, numbers, ...",
+   "bug_killing": true,
+   "class_2018": "automated scan",
+   "decidable_2018": "",
+   "coverage": "gap",
+   "mechanisms": [],
+   "suggested_mechanism": "filename lint script (lowercase module names)"
+  },
+  {
+   "id": "4.1.b",
+   "chapter": "Modules",
+   "section": "Naming Conventions",
+   "snippet": "All module names shall be unique in their first 8 characters and end ...",
+   "bug_killing": false,
+   "class_2018": "automated scan",
+   "decidable_2018": "",
+   "coverage": "gap",
+   "mechanisms": [],
+   "suggested_mechanism": "filename lint script (8-char uniqueness, .h/.c suffixes)"
+  },
+  {
+   "id": "4.1.c",
+   "chapter": "Modules",
+   "section": "Naming Conventions",
+   "snippet": "No module\u2019s header file name shall share the name of a header file from ...",
+   "bug_killing": true,
+   "class_2018": "automated scan",
+   "decidable_2018": "",
+   "coverage": "gap",
+   "mechanisms": [],
+   "suggested_mechanism": "filename lint script (no standard-library header collisions)"
+  },
+  {
+   "id": "4.1.d",
+   "chapter": "Modules",
+   "section": "Naming Conventions",
+   "snippet": "Any module containing a main() function shall have the word \u201cmain\u201d as ...",
+   "bug_killing": false,
+   "class_2018": "automated scan",
+   "decidable_2018": "",
+   "coverage": "gap",
+   "mechanisms": [],
+   "suggested_mechanism": "filename lint script (main module naming)"
+  },
+  {
+   "id": "4.2.a",
+   "chapter": "Modules",
+   "section": "Header Files",
+   "snippet": "There shall always be precisely one header file for each source file ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "4.2.b",
+   "chapter": "Modules",
+   "section": "Header Files",
+   "snippet": "Each header file shall contain a preprocessor guard against multiple ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "4.2.c",
+   "chapter": "Modules",
+   "section": "Header Files",
+   "snippet": "The header file shall identify only the procedures, constants, and data ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "4.2.c.i",
+   "chapter": "Modules",
+   "section": "Header Files",
+   "snippet": "It is a preferred practice that no variable ever be declared (via ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "4.2.c.ii",
+   "chapter": "Modules",
+   "section": "Header Files",
+   "snippet": "No storage for any variable shall be allocated in a header file.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "4.2.d",
+   "chapter": "Modules",
+   "section": "Header Files",
+   "snippet": "No public header file shall contain a #include of any private header ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "4.3.a",
+   "chapter": "Modules",
+   "section": "Source Files",
+   "snippet": "Each source file shall include only the behaviors appropriate to ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (human language)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "4.3.b",
+   "chapter": "Modules",
+   "section": "Source Files",
+   "snippet": "Each source file shall be comprised of some or all of the following ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "4.3.c",
+   "chapter": "Modules",
+   "section": "Source Files",
+   "snippet": "Each source file shall always #include the header file of the same name ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "4.3.d",
+   "chapter": "Modules",
+   "section": "Source Files",
+   "snippet": "Absolute paths shall not be used in include file names.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "4.3.e",
+   "chapter": "Modules",
+   "section": "Source Files",
+   "snippet": "Each source file shall be free of unused include files.",
+   "bug_killing": false,
+   "class_2018": "static analysis",
+   "decidable_2018": "",
+   "coverage": "gap",
+   "mechanisms": [],
+   "suggested_mechanism": "include-what-you-use (unused includes)"
+  },
+  {
+   "id": "4.3.f",
+   "chapter": "Modules",
+   "section": "Source Files",
+   "snippet": "No source file shall #include another source file.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "4.4.a",
+   "chapter": "Modules",
+   "section": "File Templates",
+   "snippet": "A set of templates for header files and source files shall be ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.1.a",
+   "chapter": "Data Types",
+   "section": "Naming Conventions",
+   "snippet": "The names of all new data types, including structures, unions, and ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "readability-identifier-naming (TypedefSuffix _t, EnumConstantCase UPPER_CASE)",
+     "mode": "gate",
+     "note": "suffix and case only; full naming quality needs review"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.1.b",
+   "chapter": "Data Types",
+   "section": "Naming Conventions",
+   "snippet": "All new structures, unions, and enumerations shall be named via a ...",
+   "bug_killing": false,
+   "class_2018": "automated scan",
+   "decidable_2018": "",
+   "coverage": "gap",
+   "mechanisms": [],
+   "suggested_mechanism": "clang-query for struct/union/enum tags lacking a typedef"
+  },
+  {
+   "id": "5.1.c",
+   "chapter": "Data Types",
+   "section": "Naming Conventions",
+   "snippet": "The name of all public data types shall be prefixed with their module ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "NEW - No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.2.a",
+   "chapter": "Data Types",
+   "section": "Fixed-Width Integers",
+   "snippet": "Whenever the width, in bits or bytes, of an integer value matters in ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.2.b",
+   "chapter": "Data Types",
+   "section": "Fixed-Width Integers",
+   "snippet": "The keywords short and long shall not be used.",
+   "bug_killing": true,
+   "class_2018": "automated scan",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "check.sh",
+     "detail": "short/long lexical gate",
+     "mode": "gate",
+     "note": "exits 1; reviewed exceptions via a // barr-c:allow comment"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.2.c",
+   "chapter": "Data Types",
+   "section": "Fixed-Width Integers",
+   "snippet": "Use of the keyword char shall be restricted to the declaration of and ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.3.a",
+   "chapter": "Data Types",
+   "section": "Signed Integers",
+   "snippet": "Bit-fields shall not be defined within signed integer types.",
+   "bug_killing": false,
+   "class_2018": "static analysis",
+   "decidable_2018": "",
+   "coverage": "gap",
+   "mechanisms": [],
+   "suggested_mechanism": "static analysis for bit-fields in signed types (no clang-tidy check exists)"
+  },
+  {
+   "id": "5.3.b",
+   "chapter": "Data Types",
+   "section": "Signed Integers",
+   "snippet": "None of the bitwise operators (i.e., &, |, ~, ^, <<, and >>) shall be ...",
+   "bug_killing": true,
+   "class_2018": "static analysis",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "hicpp-signed-bitwise",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.3.c",
+   "chapter": "Data Types",
+   "section": "Signed Integers",
+   "snippet": "Signed integers shall not be combined with unsigned integers in ...",
+   "bug_killing": true,
+   "class_2018": "static analysis",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "compiler",
+     "detail": "-Wsign-compare (in -Wall)",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.4.a",
+   "chapter": "Data Types",
+   "section": "Floating Point",
+   "snippet": "Avoid the use of floating point constants and variables whenever ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (unless never)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.4.b",
+   "chapter": "Data Types",
+   "section": "Floating Point",
+   "snippet": "When floating point calculations are necessary:",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.4.b.i",
+   "chapter": "Data Types",
+   "section": "Floating Point",
+   "snippet": "Use the C99 type names float32_t, float64_t, and float128_t.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.4.b.ii",
+   "chapter": "Data Types",
+   "section": "Floating Point",
+   "snippet": "Append an \u2018f\u2019 to all single-precision constants (e.g., pi = 3.141592f).",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.4.b.iii",
+   "chapter": "Data Types",
+   "section": "Floating Point",
+   "snippet": "Ensure that the compiler supports double precision, if your math ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.4.b.iv",
+   "chapter": "Data Types",
+   "section": "Floating Point",
+   "snippet": "Never test for equality or inequality of floating point values.",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "compiler",
+     "detail": "-Wfloat-equal",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.4.b.v",
+   "chapter": "Data Types",
+   "section": "Floating Point",
+   "snippet": "Always invoke the isfinite() macro to check that prior calculations ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "NEW - No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.5.a",
+   "chapter": "Data Types",
+   "section": "Structures and Unions",
+   "snippet": "Appropriate care shall be taken to prevent the compiler from inserting ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.5.b",
+   "chapter": "Data Types",
+   "section": "Structures and Unions",
+   "snippet": "Appropriate care shall be taken to prevent the compiler from altering ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.6.a",
+   "chapter": "Data Types",
+   "section": "Booleans",
+   "snippet": "Boolean variables shall be declared as type bool*.*",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "NEW - No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "5.6.b",
+   "chapter": "Data Types",
+   "section": "Booleans",
+   "snippet": "Non-Boolean values shall be converted to Boolean via use of relational ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "NEW - No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.1.a",
+   "chapter": "Procedures",
+   "section": "Naming Conventions",
+   "snippet": "No procedure shall have a name that is a keyword of any standard ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.1.b",
+   "chapter": "Procedures",
+   "section": "Naming Conventions",
+   "snippet": "No procedure shall have a name that overlaps a function in the C ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.1.c",
+   "chapter": "Procedures",
+   "section": "Naming Conventions",
+   "snippet": "No procedure shall have a name that begins with an underscore.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "bugprone-reserved-identifier",
+     "mode": "gate",
+     "note": "readability-identifier-naming co-fires on the same names"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.1.d",
+   "chapter": "Procedures",
+   "section": "Naming Conventions",
+   "snippet": "No procedure name shall be longer than 31 characters.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.1.e",
+   "chapter": "Procedures",
+   "section": "Naming Conventions",
+   "snippet": "No function name shall contain any uppercase letters.",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "readability-identifier-naming.FunctionCase lower_case",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.1.f",
+   "chapter": "Procedures",
+   "section": "Naming Conventions",
+   "snippet": "No macro name shall contain any lowercase letters.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "readability-identifier-naming.MacroDefinitionCase UPPER_CASE",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.1.g",
+   "chapter": "Procedures",
+   "section": "Naming Conventions",
+   "snippet": "Underscores shall be used to separate words in procedure names.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (human language)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.1.h",
+   "chapter": "Procedures",
+   "section": "Naming Conventions",
+   "snippet": "Each procedure\u2019s name shall be descriptive of its purpose. Note that ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (human language)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.1.i",
+   "chapter": "Procedures",
+   "section": "Naming Conventions",
+   "snippet": "The names of all public functions shall be prefixed with their module ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.2.a",
+   "chapter": "Procedures",
+   "section": "Functions",
+   "snippet": "All reasonable effort shall be taken to keep the length of each ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "readability-function-size.LineThreshold 100",
+     "mode": "gate",
+     "note": "100 lines approximates the rule's one printed page"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.2.b",
+   "chapter": "Procedures",
+   "section": "Functions",
+   "snippet": "Whenever possible, all functions shall be made to start at the top of a ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (subjective)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.2.c",
+   "chapter": "Procedures",
+   "section": "Functions",
+   "snippet": "It is a preferred practice that all functions shall have just one exit ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.2.d",
+   "chapter": "Procedures",
+   "section": "Functions",
+   "snippet": "A prototype shall be declared for each public function in the module ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "compiler",
+     "detail": "-Werror=implicit-function-declaration",
+     "mode": "gate",
+     "note": "catches calls with no visible declaration; header placement needs review"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.2.e",
+   "chapter": "Procedures",
+   "section": "Functions",
+   "snippet": "All private functions shall be declared static*.*",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.2.f",
+   "chapter": "Procedures",
+   "section": "Functions",
+   "snippet": "Each parameter shall be explicitly declared and meaningfully named. ##",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "misc-unused-parameters",
+     "mode": "gate",
+     "note": "explicit declaration; meaningful naming needs review"
+    },
+    {
+     "tool": "compiler",
+     "detail": "-Wunused-parameter (in -Wextra)",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.3.a",
+   "chapter": "Procedures",
+   "section": "Function-Like Macros",
+   "snippet": "Parameterized macros shall not be used if a function can be written to ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.3.b",
+   "chapter": "Procedures",
+   "section": "Function-Like Macros",
+   "snippet": "If parameterized macros are used for some reason, these rules apply:",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.3.b.i",
+   "chapter": "Procedures",
+   "section": "Function-Like Macros",
+   "snippet": "Surround the entire macro body with parentheses.",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "bugprone-macro-parentheses",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.3.b.ii",
+   "chapter": "Procedures",
+   "section": "Function-Like Macros",
+   "snippet": "Surround each use of a parameter with parentheses.",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "bugprone-macro-parentheses",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.3.b.iii",
+   "chapter": "Procedures",
+   "section": "Function-Like Macros",
+   "snippet": "Use each parameter no more than once, to avoid unintended side effects.",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "bugprone-macro-repeated-side-effects",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.3.b.iv",
+   "chapter": "Procedures",
+   "section": "Function-Like Macros",
+   "snippet": "Never include a transfer of control (e.g., return keyword). ##",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "NEW - Likely",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.4.a",
+   "chapter": "Procedures",
+   "section": "Tasks",
+   "snippet": "All functions that encapsulate threads of execution (a.k.a., tasks, ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.5.a",
+   "chapter": "Procedures",
+   "section": "Interrupt Service Routines",
+   "snippet": "Interrupt service routines (ISRs) are not ordinary functions. The ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.5.b",
+   "chapter": "Procedures",
+   "section": "Interrupt Service Routines",
+   "snippet": "All functions that implement ISRs shall be given names ending with ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.5.c",
+   "chapter": "Procedures",
+   "section": "Interrupt Service Routines",
+   "snippet": "To ensure that ISRs are not inadvertently called from other parts of ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "6.5.d",
+   "chapter": "Procedures",
+   "section": "Interrupt Service Routines",
+   "snippet": "A stub or default ISR shall be installed in the vector table at the ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.a",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "No variable shall have a name that is a keyword of C, C++, or any other ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.b",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "No variable shall have a name that overlaps with a variable name from ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.c",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "No variable shall have a name that begins with an underscore.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "bugprone-reserved-identifier",
+     "mode": "gate",
+     "note": "readability-identifier-naming co-fires on the same names"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.d",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "No variable name shall be longer than 31 characters.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.e",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "No variable name shall be shorter than 3 characters, including loop ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.f",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "No variable name shall contain any uppercase letters.",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "readability-identifier-naming.VariableCase lower_case",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.g",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "No variable name shall contain any numeric value that is called out ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (human language)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.h",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "Underscores shall be used to separate words in variable names.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (human language)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.i",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "Each variable\u2019s name shall be descriptive of its purpose.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "No (human language)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.j",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "The names of any global variables shall begin with the letter \u2018g\u2019. For ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "readability-identifier-naming.GlobalVariablePrefix g_",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.k",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "The names of any pointer variables shall begin with the letter \u2018p\u2019. For ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "readability-identifier-naming.GlobalPointerPrefix gp_",
+     "mode": "gate",
+     "note": "global pointers only; local p_ prefixes need review"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.l",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "The names of any pointer-to-pointer variables shall begin with the ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.m",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "The names of all integer variables containing Boolean information ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.n",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "The names of any variables representing non-pointer handles for ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "NEW - No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.1.o",
+   "chapter": "Variables",
+   "section": "Naming Conventions",
+   "snippet": "In the case of a variable name requiring multiple of the above ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "NEW - No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.2.a",
+   "chapter": "Variables",
+   "section": "Initialization",
+   "snippet": "All variables shall be initialized before use.",
+   "bug_killing": true,
+   "class_2018": "static analysis",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "cppcoreguidelines-init-variables",
+     "mode": "gate",
+     "note": "flags any declaration without an initializer"
+    },
+    {
+     "tool": "compiler",
+     "detail": "-Wuninitialized (in -Wall)",
+     "mode": "gate",
+     "note": "use-before-set paths only"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.2.b",
+   "chapter": "Variables",
+   "section": "Initialization",
+   "snippet": "It is preferable to define local variables as you need them, rather ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.2.c",
+   "chapter": "Variables",
+   "section": "Initialization",
+   "snippet": "If project- or file-global variables are used, their definitions shall ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "NEW - No (outside of code)",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "7.2.d",
+   "chapter": "Variables",
+   "section": "Initialization",
+   "snippet": "Any pointer variable lacking an initial address shall be initialized to ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "NEW - Likely",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.1.a",
+   "chapter": "Expressions and Statements",
+   "section": "Variable Declarations",
+   "snippet": "The comma operator (,) shall not be used within variable declarations. ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "readability-isolate-declaration",
+     "mode": "gate",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.2.a",
+   "chapter": "Expressions and Statements",
+   "section": "If-Else Statements",
+   "snippet": "It is a preferred practice that the shortest (measured in lines of ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.2.b",
+   "chapter": "Expressions and Statements",
+   "section": "If-Else Statements",
+   "snippet": "Nested if\u2026else statements shall not be deeper than two levels. Use ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.2.c",
+   "chapter": "Expressions and Statements",
+   "section": "If-Else Statements",
+   "snippet": "Assignments shall not be made within an if or else if test.",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "bugprone-assignment-in-if-condition",
+     "mode": "gate",
+     "note": "fires regardless of extra parentheses; the stricter mechanism"
+    },
+    {
+     "tool": "compiler",
+     "detail": "-Werror=parentheses",
+     "mode": "gate",
+     "note": "suppressed by an extra parenthesis pair by design"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.2.d",
+   "chapter": "Expressions and Statements",
+   "section": "If-Else Statements",
+   "snippet": "Any if statement with an else if clause shall end with an else clause. ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.3.a",
+   "chapter": "Expressions and Statements",
+   "section": "Switch Statements",
+   "snippet": "The break for each case shall be indented to align with the associated ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.3.b",
+   "chapter": "Expressions and Statements",
+   "section": "Switch Statements",
+   "snippet": "All switch statements shall contain a default block.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "bugprone-switch-missing-default-case",
+     "mode": "gate",
+     "note": "skips enum-typed switch conditions"
+    },
+    {
+     "tool": "compiler",
+     "detail": "-Wswitch-default",
+     "mode": "gate",
+     "note": "fires on every switch"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.3.c",
+   "chapter": "Expressions and Statements",
+   "section": "Switch Statements",
+   "snippet": "Any case designed to fall through to the next shall be commented to ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "NEW - No (comments)",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "compiler",
+     "detail": "-Wimplicit-fallthrough",
+     "mode": "gate",
+     "note": "gcc honors the rule's fall-through comment; clang ignores comments and needs __attribute__((fallthrough))"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.4.a",
+   "chapter": "Expressions and Statements",
+   "section": "Loops",
+   "snippet": "Magic numbers shall not be used as the initial value or in the endpoint ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "clang-tidy",
+     "detail": "readability-magic-numbers",
+     "mode": "gate",
+     "note": "broader than the rule: flags magic numbers everywhere, not only loop bounds"
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.4.b",
+   "chapter": "Expressions and Statements",
+   "section": "Loops",
+   "snippet": "With the exception of the initialization of a loop counter in the first ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.4.c",
+   "chapter": "Expressions and Statements",
+   "section": "Loops",
+   "snippet": "Infinite loops shall be implemented via controlling expression for (;;).",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.4.d",
+   "chapter": "Expressions and Statements",
+   "section": "Loops",
+   "snippet": "Each loop with an empty body shall feature a set of braces enclosing a ...",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "review",
+   "mechanisms": [],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.5.a",
+   "chapter": "Expressions and Statements",
+   "section": "Unconditional Jumps",
+   "snippet": "The use of goto statements shall be restricted as per Rule 1.7.c.",
+   "bug_killing": false,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "advisory",
+   "mechanisms": [
+    {
+     "tool": "check.sh",
+     "detail": "goto lexical scan (via Rule 1.7.c)",
+     "mode": "advisory",
+     "note": ""
+    }
+   ],
+   "suggested_mechanism": ""
+  },
+  {
+   "id": "8.5.b",
+   "chapter": "Expressions and Statements",
+   "section": "Unconditional Jumps",
+   "snippet": "C Standard Library functions abort(), exit(), setjmp(), and longjmp() ...",
+   "bug_killing": false,
+   "class_2018": "automated scan",
+   "decidable_2018": "NEW - Likely",
+   "coverage": "gap",
+   "mechanisms": [],
+   "suggested_mechanism": "one-line check.sh lexical scan for abort/exit/setjmp/longjmp"
+  },
+  {
+   "id": "8.6.a",
+   "chapter": "Expressions and Statements",
+   "section": "Equivalence Tests",
+   "snippet": "When evaluating the equality of a variable against a constant, the ...",
+   "bug_killing": true,
+   "class_2018": "code reviews",
+   "decidable_2018": "",
+   "coverage": "gated",
+   "mechanisms": [
+    {
+     "tool": "compiler",
+     "detail": "-Werror=parentheses",
+     "mode": "gate",
+     "note": "guards the defect class (assignment in a condition); the operand ordering itself needs review"
+    }
+   ],
+   "suggested_mechanism": ""
+  }
+ ],
+ "hardening_flags": [
+  {
+   "flag": "-Wshadow",
+   "purpose": "name-hiding defects"
+  },
+  {
+   "flag": "-Wundef",
+   "purpose": "undefined macros evaluated in #if"
+  },
+  {
+   "flag": "-Wvla",
+   "purpose": "variable-length arrays (no place in firmware)"
+  }
+ ]
+}

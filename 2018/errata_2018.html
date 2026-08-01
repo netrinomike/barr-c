@@ -1,0 +1,17 @@
+<style>
+body { font-family: -apple-system, sans-serif; color: #333; max-width: 860px; margin: 2rem auto; padding: 0 1rem; }
+h1 { color: #003D7A; } td, th { padding: 6px 9px; border-bottom: 1px solid #ddd; text-align: left; vertical-align: top; }
+th { background: #0066CC; color: #fff; } code { background: #f4f4f4; padding: 1px 4px; }
+</style>
+<h1>BARR-C:2018 Errata</h1>
+<p>Defects identified in the published BARR-C:2018 edition, all corrected in BARR-C:2026.</p>
+<table>
+<tr><th>Location</th><th>Defect</th><th>Correction</th></tr>
+<tr><td>Rule 5.4.b.i</td><td>Instructs use of "C99 type names" <code>float32_t</code>, <code>float64_t</code>, <code>float128_t</code>; C99 defines no such types (they are CMSIS-DSP conventions).</td><td>The standardized names are <code>_Float32</code>/<code>_Float64</code>/<code>_Float128</code> (ISO/IEC TS 18661-3; C23 Annex H).</td></tr>
+<tr><td>Section 5.5 example</td><td><code>#if ((8 != sizeof(timer_reg_t))</code> is invalid twice over: <code>sizeof</code> cannot appear in a preprocessor conditional, and the parentheses are unbalanced.</td><td>Replaced with <code>static_assert(8 == sizeof(timer_reg_t), ...)</code>.</td></tr>
+<tr><td>Section 5.4 example</td><td>Includes <code>&lt;limits.h&gt;</code> to test <code>DBL_DIG</code>.</td><td><code>DBL_DIG</code> is defined in <code>&lt;float.h&gt;</code>.</td></tr>
+<tr><td>Rule 3.1.b</td><td>Assignment-operator list includes <code>~=</code> (not a C operator) and <code>!=</code> (a comparison, correctly listed in 3.1.c); omits <code>&lt;&lt;=</code> and <code>&gt;&gt;=</code>.</td><td>List corrected.</td></tr>
+<tr><td>Footnote 12</td><td>Refers to "the <code>sizeof</code> macro."</td><td><code>sizeof</code> is an operator.</td></tr>
+<tr><td>Sections 5.1/5.5 examples</td><td>Struct members named <code>_unused</code> appear to violate the leading-underscore naming rules.</td><td>Legal: those rules reserve such identifiers at file scope; member names occupy member scope. Footnote added.</td></tr>
+<tr><td>Section 4.2 citation</td><td>Footnote links to a 2010 article URL that no longer resolves.</td><td>Citation updated to the archived copy.</td></tr>
+</table>

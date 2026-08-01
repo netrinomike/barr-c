@@ -16,6 +16,8 @@ Drop these files into your repository root:
 | `CLAUDE_BARRC.md` | Context file for AI code generators; commit at repo root. |
 | `CODE_GENERATION_POLICY.md` | The 2026 edition's generated-code rules as adoptable policy. |
 | `errata_2018.html` | Errata for the printed 2018 edition. |
+| `COVERAGE_2018.md` | Per-rule map of all 167 rules to their enforcement mechanisms (or code review). |
+| `coverage_2018.json` | The same coverage map, machine-readable. |
 
 Known limits, stated plainly: Rule 8.3.a (break aligned with its case label)
 is outside clang-format's expressive range; volatile discipline, ISR rules,

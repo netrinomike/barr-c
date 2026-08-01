@@ -1,0 +1,23 @@
+# Validates the BARR-C enforcement kit against its fixture suite: every
+# claimed gate must fail on its violation fixture, the clean pair must pass
+# everything, and formatted output must satisfy every other gate.
+# Tools are version-pinned: an ubuntu image bump must not silently change
+# gate behavior (clang-tidy 17+ required by the kit config).
+name: kit-selftest
+on: [push, pull_request]
+jobs:
+  selftest:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        edition: ["2018"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned LLVM tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format-18 clang-tidy-18 gcc
+          sudo ln -sf /usr/bin/clang-format-18 /usr/local/bin/clang-format
+          sudo ln -sf /usr/bin/clang-tidy-18 /usr/local/bin/clang-tidy
+      - name: Run validation suite
+        run: tests/run_tests.sh ${{ matrix.edition }}
