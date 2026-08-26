@@ -5,7 +5,7 @@ Coding Standard* by Michael Barr, one of the most widely adopted coding
 standards in embedded systems, harmonized with MISRA C.
 
 - 📖 The standard (free PDF and online edition): **[barrgroup.com/embedded-c-coding-standard](https://barrgroup.com/embedded-c-coding-standard)**
-- 🖨️ Printed edition: [available at Amazon](https://www.amazon.com/dp/1721127984)
+- 🖨️ Printed edition: [available at Amazon](https://www.amazon.com/dp/1721127984/netrino)
 
 ## What this is
 
