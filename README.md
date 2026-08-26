@@ -14,6 +14,27 @@ makes BARR-C executable: formatter configuration, static-analysis mapping,
 compiler gates, a one-command conformance check, ready-made CI, and a
 context file that makes the standard binding on AI code generators.
 
+## How do I enforce the BARR-C coding standard?
+
+1. Copy the [`2018/`](2018/) kit files (`.clang-format`, `.clang-tidy`,
+   `.editorconfig`, `check.sh`) into your repository root.
+2. Add the compiler warning gates from
+   [`COMPILER_FLAGS.md`](2018/COMPILER_FLAGS.md) to your build.
+3. Run `./check.sh` for a one-command conformance check, and wire
+   [`ci/github-actions.yml`](2018/ci/github-actions.yml) into CI so every
+   push is gated.
+4. Cover the rules no tool can decide in peer code review, using
+   [`COVERAGE_2018.md`](2018/COVERAGE_2018.md) as the rule-by-rule
+   checklist of what is already enforced mechanically and what is not.
+5. Generating code with an AI assistant? Commit
+   [`CLAUDE_BARRC.md`](2018/CLAUDE_BARRC.md) at your repo root so the
+   standard becomes the generator's input, and adopt the four rules in
+   [`CODE_GENERATION_POLICY.md`](2018/CODE_GENERATION_POLICY.md).
+
+This matches the standard's own [enforcement
+guidelines](https://barrgroup.com/enforcement-guidelines): automated scans
+first, code review second, nothing left silently unchecked.
+
 ## Kits
 
 | Directory | Edition | Status |
